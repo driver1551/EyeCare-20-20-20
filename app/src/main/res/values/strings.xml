@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">EyeCare 20-20-20</string>
+
+    <string name="nav_home">Главная</string>
+    <string name="nav_settings">Настройки</string>
+
+    <string name="start_timer">Старт</string>
+    <string name="pause_timer">Пауза</string>
+    <string name="reset_timer">Сброс</string>
+    <string name="continue_timer">Продолжить</string>
+
+    <string name="enable_notifications">Включить уведомления</string>
+    <string name="notifications_enabled">Уведомления включены</string>
+    <string name="how_to_use_app">Правило 20-20-20 помогает снизить напряжение глаз при работе за компьютером. Каждые 20 минут делайте 20-секундный перерыв и смотрите на объект на расстоянии 6 метров.</string>
+
 </resources>

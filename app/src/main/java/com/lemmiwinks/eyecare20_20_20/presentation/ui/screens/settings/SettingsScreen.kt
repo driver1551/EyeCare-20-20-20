@@ -22,6 +22,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import com.lemmiwinks.eyecare20_20_20.R
 
 @Composable
 fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
@@ -60,8 +61,9 @@ fun SettingsScreen(viewModel: SettingsViewModel = hiltViewModel()) {
             ) {
                 Text(
                     text = if (state.notificationsEnabled)
-                        "Уведомления включены"
-                    else "Включить уведомления"
+                        context.getString(R.string.notifications_enabled)
+                    else
+                        context.getString(R.string.enable_notifications)
                 )
             }
         }

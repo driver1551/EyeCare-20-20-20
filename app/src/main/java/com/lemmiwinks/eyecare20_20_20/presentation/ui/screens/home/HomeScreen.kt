@@ -26,12 +26,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lemmiwinks.eyecare20_20_20.R
 import com.lemmiwinks.eyecare20_20_20.domain.model.HomeMviState
+import com.lemmiwinks.eyecare20_20_20.presentation.ui.theme.Purple40
+import com.lemmiwinks.eyecare20_20_20.presentation.ui.theme.PurpleGrey40
 import com.lemmiwinks.eyecare20_20_20.service.ServiceHelper
 import com.lemmiwinks.eyecare20_20_20.service.TimerService
 import com.lemmiwinks.eyecare20_20_20.service.TimerState
-import com.lemmiwinks.eyecare20_20_20.presentation.ui.theme.Purple40
-import com.lemmiwinks.eyecare20_20_20.presentation.ui.theme.PurpleGrey40
 
 /* Layout-дерево
     HomeScreen
@@ -83,7 +84,7 @@ fun HomeScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            AppDescription()
+            AppDescription(context)
         }
     }
 }
@@ -162,15 +163,19 @@ fun TimerButtons(context: Context, state: HomeMviState) {
             Text(
                 /** В зависимости от состояния таймера отправляет устанавливает текст кнопки */
                 text =
-                when(state.timerService?.currentState?.value) {
-                    TimerState.Started -> {
-                        "Пауза"
+                    when (state.timerService?.currentState?.value) {
+                        TimerState.Started -> {
+                            context.getString(R.string.pause_timer)
+                        }
+
+                        TimerState.Paused -> {
+                            context.getString(R.string.continue_timer)
+                        }
+
+                        else -> {
+                            context.getString(R.string.start_timer)
+                        }
                     }
-                    TimerState.Paused -> {
-                        "Продолжить"
-                    }
-                    else -> {"Старт"}
-                }
             )
         }
         Button(
@@ -178,16 +183,20 @@ fun TimerButtons(context: Context, state: HomeMviState) {
                 ServiceHelper.resetPendingIntent(context).send()
             }
         ) {
-            Text("Сброс")
+            Text(
+                context.getString(R.string.reset_timer)
+            )
         }
     }
 }
 
 @Composable
-fun AppDescription() {
-    Text(modifier = Modifier.padding(12.dp),
+fun AppDescription(context: Context) {
+    Text(
+        modifier = Modifier.padding(12.dp),
         textAlign = TextAlign.Center,
         fontSize = 16.sp,
-        text = "Правило 20-20-20 помогает снизить напряжение глаз при работе за компьютером. " +
-            "Каждые 20 минут делайте 20-секундный перерыв и смотрите на объект на расстоянии 6 метров.")
+        text = context.getString(R.string.how_to_use_app)
+
+    )
 }

@@ -20,23 +20,25 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.lemmiwinks.eyecare20_20_20.domain.model.HomeMviState
 import com.lemmiwinks.eyecare20_20_20.presentation.ui.navigation.Routes
+import com.lemmiwinks.eyecare20_20_20.presentation.ui.navigation.getNavigationItems
 import com.lemmiwinks.eyecare20_20_20.presentation.ui.screens.home.HomeScreen
 import com.lemmiwinks.eyecare20_20_20.presentation.ui.screens.home.HomeScreenViewModel
 import com.lemmiwinks.eyecare20_20_20.presentation.ui.screens.settings.SettingsScreen
 import com.lemmiwinks.eyecare20_20_20.presentation.ui.theme.EyeCare202020Theme
 import com.lemmiwinks.eyecare20_20_20.service.TimerService
-import com.lemmiwinks.eyecare20_20_20.presentation.ui.navigation.getNavigationItems
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -70,7 +72,7 @@ class MainActivity : ComponentActivity() {
 
             EyeCare202020Theme {
                 if (homeMviState.isServiceBound) {
-                    bottomNavigation(homeMviState)
+                    BottomNavigation(homeMviState)
                 }
             }
         }
@@ -83,10 +85,14 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun bottomNavigation(homeMviState: HomeMviState) {
+fun BottomNavigation(homeMviState: HomeMviState) {
+    val context = LocalContext.current
     val navController = rememberNavController()
-    val navItems = getNavigationItems()
-    var selectedItemIndex by rememberSaveable { mutableStateOf(0) }
+    val navItems = getNavigationItems(
+        context.getString(R.string.nav_home),
+        context.getString(R.string.nav_settings)
+    )
+    var selectedItemIndex by rememberSaveable { mutableIntStateOf(0) }
 
     Scaffold(
         bottomBar = {
