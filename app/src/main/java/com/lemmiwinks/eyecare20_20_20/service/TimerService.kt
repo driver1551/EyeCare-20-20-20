@@ -242,7 +242,7 @@ class TimerService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         serviceScope.cancel()
-        countDownTimer.cancel()
+        if (::countDownTimer.isInitialized) countDownTimer.cancel()
     }
 }
 
